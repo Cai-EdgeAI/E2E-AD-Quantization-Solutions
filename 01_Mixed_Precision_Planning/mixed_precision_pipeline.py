@@ -1,6 +1,8 @@
 import torch
+import torch.nn as nn  
 from model import E2EPlanningHead
 from ptq_sensitivity_profiler import fake_quantize_tensor
+
 
 def export_mixed_precision_model():
     print("\n[Pipeline] 启动混合精度部署导出流 (Mixed-Precision Fallback Export)...")

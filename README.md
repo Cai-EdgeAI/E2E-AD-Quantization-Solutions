@@ -1,6 +1,5 @@
 # 🚀 E2E-AD-Quantization-Solutions: 端到端自动驾驶大模型量化与部署实战
 
-**“不盲从 QAT 的高昂算力，专注纯 PTQ 的极致工程化落地。”**
 
 本项目聚焦于解决端到端模型从算法原型向车端底层硬件（如 Horizon BPU、NVIDIA Orin）迁移过程中的精度崩塌与资源抢占问题。
 

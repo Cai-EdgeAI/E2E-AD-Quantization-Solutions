@@ -1,0 +1,27 @@
+# 模拟地平线 OpenExplorer (天工开物) 编译配置文件
+model_parameters:
+  onnx_model: "e2e_ad_model_opt.onnx"
+  output_model_file_prefix: "e2e_bpu_j5"
+  march: "bayes"  # 征程5的BPU架构代号 (征程6为 nash)
+
+input_parameters:
+  input_name: "cam_images;ego_status"
+  input_type_rt: "nv12;featuremap"
+  input_layout_train: "NCHW;NCHW"
+  input_layout_rt: "NHWC;NHWC" # BPU 喜欢 NHWC 数据排布
+  norm_type: "data_mean_and_scale;no_norm"
+
+calibration_parameters:
+  cal_data_dir: "./calibration_data_nuscenes"
+  # 针对视觉 Backbone 使用 KL 散度，保留图像细节
+  calibration_type: "kl" 
+  max_percentile: 0.999 # 针对异常值启动 99.9% 截断
+  
+compiler_parameters:
+  compile_mode: "latency"
+  debug: False
+  core_num: 2  # 绑核运行，双核 BPU 协同
+  optimize_level: "O3"
+  # 强制部分敏感节点使用高精度 (Fallback 机制)
+  run_on_cpu: "post_process_nms"
+  run_on_bpu_high_prec: "final_planning_head" # 项目一的混合精度落地处
